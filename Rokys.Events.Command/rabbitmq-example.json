@@ -1,0 +1,14 @@
+{
+  "RabbitMQ": {
+    "HostName": "172.16.10.12",
+    "Port": 5672,
+    "UserName": "guest",
+    "Password": "guest", 
+    "VirtualHost": "/",
+    "EventsExchange": "rokys.memo.events",
+    "EmployeeEventsRoutingKey": "employee.events",
+    "ConnectionTimeout": 30000,
+    "EnableRetries": true,
+    "MaxRetries": 3
+  }
+}
