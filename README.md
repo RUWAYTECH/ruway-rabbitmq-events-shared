@@ -1,0 +1,1 @@
+# ruway-rabbitmq-events-shared
