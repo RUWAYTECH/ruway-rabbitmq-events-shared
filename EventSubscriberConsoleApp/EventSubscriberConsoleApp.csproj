@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Rokys.Events.Command\Rokys.Events.Command.csproj" />
-    <ProjectReference Include="..\Rokys.Events.Command.Interfaces\Rokys.Events.Command.Interfaces.csproj" />
+    <ProjectReference Include="..\Ruway.Events.Command\Ruway.Events.Command.csproj" />
+    <ProjectReference Include="..\Ruway.Events.Command.Interfaces\Ruway.Events.Command.Interfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>

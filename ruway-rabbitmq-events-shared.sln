@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rokys.Events.Command", "Rokys.Events.Command\Rokys.Events.Command.csproj", "{8B106689-9435-4736-BDE8-45DF3EC23AAB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ruway.Events.Command", "Ruway.Events.Command\Ruway.Events.Command.csproj", "{8B106689-9435-4736-BDE8-45DF3EC23AAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rokys.Events.Command.Interfaces", "Rokys.Events.Command.Interfaces\Rokys.Events.Command.Interfaces.csproj", "{2DB15128-5E53-4BF5-B11D-2176DD2A636A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ruway.Events.Command.Interfaces", "Ruway.Events.Command.Interfaces\Ruway.Events.Command.Interfaces.csproj", "{2DB15128-5E53-4BF5-B11D-2176DD2A636A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSubscriberConsoleApp", "EventSubscriberConsoleApp\EventSubscriberConsoleApp.csproj", "{97FC047A-0128-4818-BE29-034041E1F1F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,18 @@ Global
 		{2DB15128-5E53-4BF5-B11D-2176DD2A636A}.Release|x64.Build.0 = Release|Any CPU
 		{2DB15128-5E53-4BF5-B11D-2176DD2A636A}.Release|x86.ActiveCfg = Release|Any CPU
 		{2DB15128-5E53-4BF5-B11D-2176DD2A636A}.Release|x86.Build.0 = Release|Any CPU
+		{97FC047A-0128-4818-BE29-034041E1F1F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97FC047A-0128-4818-BE29-034041E1F1F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97FC047A-0128-4818-BE29-034041E1F1F4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{97FC047A-0128-4818-BE29-034041E1F1F4}.Debug|x64.Build.0 = Debug|Any CPU
+		{97FC047A-0128-4818-BE29-034041E1F1F4}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{97FC047A-0128-4818-BE29-034041E1F1F4}.Debug|x86.Build.0 = Debug|Any CPU
+		{97FC047A-0128-4818-BE29-034041E1F1F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97FC047A-0128-4818-BE29-034041E1F1F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97FC047A-0128-4818-BE29-034041E1F1F4}.Release|x64.ActiveCfg = Release|Any CPU
+		{97FC047A-0128-4818-BE29-034041E1F1F4}.Release|x64.Build.0 = Release|Any CPU
+		{97FC047A-0128-4818-BE29-034041E1F1F4}.Release|x86.ActiveCfg = Release|Any CPU
+		{97FC047A-0128-4818-BE29-034041E1F1F4}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
