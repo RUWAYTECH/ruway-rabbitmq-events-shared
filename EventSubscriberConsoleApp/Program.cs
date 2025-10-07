@@ -26,7 +26,14 @@ class Program
             UserName = "owner",
             Password = "P4ss@78_#%a9",
             EventsExchange = "ruway.events",
-            EmployeeEventsRoutingKey = "employee.events"
+            EmployeeEventsRoutingKey = "employee.events",
+            EntityRoutingKeys = new Dictionary<string, string>
+            {
+                { "employee", "memos.employee.events" },
+                { "enterprise", "memos.enterprise.events" },
+                { "store", "memos.store.events" },
+                { "employee_store", "memos.employee_store.events" }
+            }
         });
         
         var serviceProvider = services.BuildServiceProvider();
@@ -37,41 +44,65 @@ class Program
         try
         {
             logger.LogInformation("=== Iniciando Sistema de Eventos de Empleados ===");
-            
-            // 1. Configurar suscripción específica para eventos de creación de empleados
-            await subscriber.SubscribeAsync<EmployeeCreatedEvent>(async (employeeCreatedEvent) =>
+
+            try
             {
-                logger.LogInformation("🎉 Nuevo empleado creado: {FirstName} {LastName} ({Email})",
-                    employeeCreatedEvent.FirstName, employeeCreatedEvent.LastName, employeeCreatedEvent.Email);
-                    
-                await ProcessNewEmployeeCreated(employeeCreatedEvent, logger);
-            }, "memos.employee.created");
-            
-            // 2. Suscripción genérica para logging de todos los eventos de empleados
-            await subscriber.SubscribeAsync(async (message, routingKey) =>
+                logger.LogInformation("🔧 Configurando suscripciones...");
+                
+                // 1. Configurar suscripción específica para eventos de creación de empleados
+                await subscriber.SubscribeAsync<EmployeeCreatedEvent>(async (employeeCreatedEvent) =>
+                {
+                    logger.LogInformation("🎉 Nuevo empleado creado: {FirstName} {LastName} ({Email})",
+                        employeeCreatedEvent.FirstName, employeeCreatedEvent.LastName, employeeCreatedEvent.Email);
+
+                    await ProcessNewEmployeeCreated(employeeCreatedEvent, logger);
+                }, "memos.employee.events.created");
+                
+                logger.LogInformation("✅ Suscripción específica configurada para 'memos.employee.events.created'");
+                
+                // 2. Suscripción genérica para logging de todos los eventos de empleados
+               await subscriber.SubscribeAsync(async (message, routingKey) =>
+                {
+                    logger.LogInformation("📨 Evento de empleado [{RoutingKey}]: {Message}", 
+                        routingKey, message);
+                    await Task.CompletedTask;
+                }, "memos.employee.events.*");
+                
+                logger.LogInformation("✅ Suscripción genérica configurada para 'memos.employee.events.*'");
+                
+                logger.LogInformation("🔄 Iniciando escucha de eventos...");
+                await subscriber.StartListeningAsync();
+                logger.LogInformation("✅ Escucha de eventos iniciada correctamente");
+            }
+            catch (Exception connectionEx)
             {
-                logger.LogInformation("� Evento de empleado [{RoutingKey}]: {Message}", 
-                    routingKey, message);
-                await Task.CompletedTask;
-            }, "employee.events.*");
+                logger.LogWarning(connectionEx, "⚠️ No se pudo conectar a RabbitMQ. La aplicación funcionará en modo publicación únicamente.");
+            }
             
-            logger.LogInformation("🔄 Iniciando escucha de eventos...");
-            await subscriber.StartListeningAsync();
-            
-            logger.LogInformation("✅ Suscriptor iniciado.");
+            logger.LogInformation("✅ Sistema iniciado.");
             logger.LogInformation("📝 Comandos disponibles:");
             logger.LogInformation("   - 'create' para crear un empleado de prueba");
+            logger.LogInformation("   - 'help' para mostrar ayuda");
             logger.LogInformation("   - 'exit' para salir");
+            logger.LogInformation("");
+            logger.LogInformation("💡 Escribe un comando y presiona Enter:");
             
             // Bucle de comandos interactivos
             await ProcessUserCommands(publisher, logger);
             
-            await subscriber.StopListeningAsync();
-            logger.LogInformation("✅ Sistema detenido correctamente");
+            try
+            {
+                await subscriber.StopListeningAsync();
+                logger.LogInformation("✅ Sistema detenido correctamente");
+            }
+            catch (Exception stopEx)
+            {
+                logger.LogWarning(stopEx, "⚠️ Error al detener suscriptor (probablemente no estaba conectado)");
+            }
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "❌ Error en el sistema de eventos");
+            logger.LogError(ex, "❌ Error crítico en el sistema de eventos");
         }
         finally
         {

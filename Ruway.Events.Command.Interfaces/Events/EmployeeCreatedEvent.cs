@@ -22,5 +22,5 @@ public record EmployeeCreatedEvent(
     /// <summary>
     /// Routing key específica para eventos de empleados creados
     /// </summary>
-    public string RoutingKey => "memos.employee.created";
+    public string RoutingKey => "memos.employee.events.created";
 }

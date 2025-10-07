@@ -255,7 +255,47 @@ public class EventSubscriber : IEventSubscriber
     {
         try
         {
-            var deserializedEvent = JsonConvert.DeserializeObject<TEvent>(message);
+            TEvent? deserializedEvent = default;
+            
+            // Intentar deserializar como estructura de evento completa primero
+            try
+            {
+                var eventWrapper = JsonConvert.DeserializeObject<dynamic>(message, new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.All
+                });
+                
+                // Si el mensaje tiene la estructura {EventId, EventName, Version, OccurredOn, Data}
+                if (eventWrapper?.Data != null)
+                {
+                    // Deserializar la parte "Data" como el evento específico
+                    var dataJson = JsonConvert.SerializeObject(eventWrapper.Data, new JsonSerializerSettings
+                    {
+                        TypeNameHandling = TypeNameHandling.All
+                    });
+                    deserializedEvent = JsonConvert.DeserializeObject<TEvent>(dataJson, new JsonSerializerSettings
+                    {
+                        TypeNameHandling = TypeNameHandling.All
+                    });
+                }
+                else
+                {
+                    // Si no tiene la estructura wrapper, deserializar directamente
+                    deserializedEvent = JsonConvert.DeserializeObject<TEvent>(message, new JsonSerializerSettings
+                    {
+                        TypeNameHandling = TypeNameHandling.All
+                    });
+                }
+            }
+            catch
+            {
+                // Fallback: deserializar directamente
+                deserializedEvent = JsonConvert.DeserializeObject<TEvent>(message, new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.All
+                });
+            }
+            
             if (deserializedEvent != null)
             {
                 if (_typedHandlers.TryGetValue(eventType, out var handlers))
