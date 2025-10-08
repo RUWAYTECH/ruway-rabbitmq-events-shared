@@ -1,4 +1,5 @@
 using MediatR;
+using Ruway.Events.Command.Interfaces.Enums;
 
 namespace Ruway.Events.Command.Interfaces.Events;
 
@@ -104,9 +105,28 @@ public record UserLoggedOutEvent(
     public DateTime OccurredOn { get; } = DateTime.UtcNow;
     public string EventName => nameof(UserLoggedOutEvent);
     public int Version => 1;
-    
+
     /// <summary>
     /// Routing key específica para eventos de logout de usuarios
     /// </summary>
     public string RoutingKey => "security.user.logged_out";
+}
+
+public record UserRoleAssignedEvent(
+    Guid UserId,
+    string RoleCode,
+    string RoleName,
+    string ApplicationCode,
+    UserActions Actions = UserActions.All
+) : IDomainEvent, INotification, IRoutableEvent
+{
+    public Guid EventId { get; } = Guid.NewGuid();
+    public DateTime OccurredOn { get; } = DateTime.UtcNow;
+    public string EventName => nameof(UserRoleAssignedEvent);
+    public int Version => 1;
+    
+    /// <summary>
+    /// Routing key específica para eventos de usuarios eliminados
+    /// </summary>
+    public string RoutingKey => "security.user_role.assigned";
 }
