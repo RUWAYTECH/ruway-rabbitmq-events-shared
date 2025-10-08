@@ -58,7 +58,7 @@ public record UserUpdatedEvent(
 /// </summary>
 public record UserDeletedEvent(
     Guid UserId,
-    string UserName
+    string ApplicationCode
 ) : IDomainEvent, INotification, IRoutableEvent
 {
     public Guid EventId { get; } = Guid.NewGuid();
