@@ -7,10 +7,12 @@ namespace Ruway.Events.Command.Interfaces.Events;
 /// </summary>
 public record UserCreatedEvent(
     Guid UserId,
+    Guid EmployeeId,
     string UserName,
     string Email,
     string FirstName,
     string LastName,
+    string ApplicationCode,
     string[]? Roles = null
 ) : IDomainEvent, INotification, IRoutableEvent
 {
@@ -30,10 +32,12 @@ public record UserCreatedEvent(
 /// </summary>
 public record UserUpdatedEvent(
     Guid UserId,
+    Guid EmployeeId,
     string UserName,
     string Email,
     string FirstName,
     string LastName,
+    string ApplicationCode,
     string[]? Roles = null
 ) : IDomainEvent, INotification, IRoutableEvent
 {
