@@ -33,7 +33,7 @@ public record UserCreatedEvent(
 /// </summary>
 public record UserUpdatedEvent(
     Guid UserId,
-    Guid EmployeeId,
+    Guid? EmployeeId,
     string UserName,
     string Email,
     string FirstName,
