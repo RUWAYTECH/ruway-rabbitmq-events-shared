@@ -1,4 +1,5 @@
 using MediatR;
+using Ruway.Events.Command.Interfaces.Constants;
 
 namespace Ruway.Events.Command.Interfaces.Events;
 
@@ -26,5 +27,5 @@ public record EmployeeUpdatedEvent(
     /// <summary>
     /// Routing key específica para eventos de empleados actualizados
     /// </summary>
-    public string RoutingKey => "memos.employee.updated";
+    public string RoutingKey => EventConstants.EmployeeEvents.EmployeeUpdated;
 }

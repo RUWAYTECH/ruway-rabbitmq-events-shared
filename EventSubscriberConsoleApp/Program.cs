@@ -165,6 +165,7 @@ class Program
             var documentNumber = $"{random.Next(10000000, 99999999)}";
             var email = $"{firstName.ToLower()}.{lastName.ToLower()}@ruway.com";
             var phone = $"6{random.Next(10000000, 99999999)}";
+            var personalEmail = $"{firstName.ToLower()}.{lastName.ToLower()}@example.com";
             
             var employeeCreatedEvent = new EmployeeCreatedEvent(
                 employeeId,
@@ -172,7 +173,12 @@ class Program
                 lastName,
                 documentNumber,
                 email,
-                phone
+                phone,
+                personalEmail,
+                EmployeeStores: new[]
+                {
+                    new EmployeeStores(Guid.NewGuid(), DateTime.UtcNow)
+                }
             );
             
             logger.LogInformation("📤 Publicando evento de creación de empleado...");

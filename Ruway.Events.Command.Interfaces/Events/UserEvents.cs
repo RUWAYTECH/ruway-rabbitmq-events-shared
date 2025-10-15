@@ -1,4 +1,5 @@
 using MediatR;
+using Ruway.Events.Command.Interfaces.Constants;
 using Ruway.Events.Command.Interfaces.Enums;
 
 namespace Ruway.Events.Command.Interfaces.Events;
@@ -25,7 +26,7 @@ public record UserCreatedEvent(
     /// <summary>
     /// Routing key específica para eventos de usuarios creados
     /// </summary>
-    public string RoutingKey => "security.user.created";
+    public string RoutingKey =>  EventConstants.UserEvents.UserCreated;
 }
 
 /// <summary>
@@ -51,7 +52,7 @@ public record UserUpdatedEvent(
     /// <summary>
     /// Routing key específica para eventos de usuarios actualizados
     /// </summary>
-    public string RoutingKey => "security.user.updated";
+    public string RoutingKey => EventConstants.UserEvents.UserUpdated;
 }
 
 /// <summary>
@@ -70,48 +71,11 @@ public record UserDeletedEvent(
     /// <summary>
     /// Routing key específica para eventos de usuarios eliminados
     /// </summary>
-    public string RoutingKey => "security.user.deleted";
+    public string RoutingKey => EventConstants.UserEvents.UserDeleted;
 }
 
-/// <summary>
-/// Evento que se publica cuando un usuario se autentica
-/// </summary>
-public record UserLoggedInEvent(
-    Guid UserId,
-    string UserName,
-    string IpAddress,
-    string UserAgent
-) : IDomainEvent, INotification, IRoutableEvent
-{
-    public Guid EventId { get; } = Guid.NewGuid();
-    public DateTime OccurredOn { get; } = DateTime.UtcNow;
-    public string EventName => nameof(UserLoggedInEvent);
-    public int Version => 1;
-    
-    /// <summary>
-    /// Routing key específica para eventos de login de usuarios
-    /// </summary>
-    public string RoutingKey => "security.user.logged_in";
-}
 
-/// <summary>
-/// Evento que se publica cuando un usuario cierra sesión
-/// </summary>
-public record UserLoggedOutEvent(
-    Guid UserId,
-    string UserName
-) : IDomainEvent, INotification, IRoutableEvent
-{
-    public Guid EventId { get; } = Guid.NewGuid();
-    public DateTime OccurredOn { get; } = DateTime.UtcNow;
-    public string EventName => nameof(UserLoggedOutEvent);
-    public int Version => 1;
 
-    /// <summary>
-    /// Routing key específica para eventos de logout de usuarios
-    /// </summary>
-    public string RoutingKey => "security.user.logged_out";
-}
 
 public record UserRoleAssignedEvent(
     Guid UserId,
@@ -129,5 +93,5 @@ public record UserRoleAssignedEvent(
     /// <summary>
     /// Routing key específica para eventos de usuarios eliminados
     /// </summary>
-    public string RoutingKey => "security.user_role.assigned";
+    public string RoutingKey => EventConstants.UserEvents.UserRoleAssigned;
 }

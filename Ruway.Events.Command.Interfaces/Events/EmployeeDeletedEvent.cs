@@ -1,4 +1,5 @@
 using MediatR;
+using Ruway.Events.Command.Interfaces.Constants;
 
 namespace Ruway.Events.Command.Interfaces.Events;
 
@@ -17,5 +18,5 @@ public record EmployeeDeletedEvent(
     /// <summary>
     /// Routing key específica para eventos de empleados eliminados
     /// </summary>
-    public string RoutingKey => "memos.employee.deleted";
+    public string RoutingKey => EventConstants.EmployeeEvents.EmployeeDeleted;
 }
