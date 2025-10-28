@@ -41,16 +41,19 @@ class Program
         });
 
         // Configurar conexión a base de datos
-        var connectionString = "Server=172.16.10.12;Database=DBSecurityQA;User=memo;Password=Memo$2025;TrustServerCertificate=True;";
+        var connectionString = "Server=172.16.10.12;Database=DBSecurityQAV2;User=memo;Password=Memo$2025;TrustServerCertificate=True;";
         services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
         // Registrar servicios
         services.AddScoped<IPasswordService, PasswordService>();
 
         var serviceProvider = services.BuildServiceProvider();
+        var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
+        
+        logger.LogInformation("🚀 Aplicación iniciada - Resolviendo servicios...");
+        
         var subscriber = serviceProvider.GetRequiredService<IEventSubscriber>();
         var publisher = serviceProvider.GetRequiredService<IEventPublisher>();
-        var logger = serviceProvider.GetRequiredService<ILogger<Program>>();
 
         try
         {
@@ -93,7 +96,8 @@ class Program
             logger.LogInformation("✅ Sistema iniciado.");
             logger.LogInformation("📝 Comandos disponibles:");
             logger.LogInformation("   - 'create' para crear un empleado de prueba");
-            logger.LogInformation("   - 'help' para mostrar ayuda");
+            logger.LogInformation("   - 'update-passwords' para migrar passwords de usuarios");
+            logger.LogInformation("   - 'help' para mostrar ayuda completa");
             logger.LogInformation("   - 'exit' para salir");
             logger.LogInformation("");
             logger.LogInformation("💡 Escribe un comando y presiona Enter:");
@@ -268,12 +272,10 @@ class Program
             try
             {
                 // If passwordhash is empty or null, set to hash of username
-                if (string.IsNullOrWhiteSpace(user.PasswordHash))
-                {
                     user.PasswordHash = pwdService.HashPassword(user.UserName);
                     user.UpdatedAt = DateTime.UtcNow;
                     updated++;
-                }
+              
             }
             catch (Exception ex)
             {
@@ -298,8 +300,10 @@ class Program
     private static void ShowHelp(ILogger logger)
     {
         logger.LogInformation("📋 Comandos disponibles:");
-        logger.LogInformation("   create  - Crea y publica un evento de empleado de prueba");
-        logger.LogInformation("   exit    - Sale de la aplicación");
-        logger.LogInformation("   help    - Muestra esta ayuda");
+        logger.LogInformation("   create           - Crea y publica un evento de empleado de prueba");
+        logger.LogInformation("   update-passwords - Migra passwords de usuarios (username encriptado)");
+        logger.LogInformation("   migrate-passwords- Alias para update-passwords");
+        logger.LogInformation("   exit             - Sale de la aplicación");
+        logger.LogInformation("   help             - Muestra esta ayuda");
     }
 }
