@@ -351,7 +351,7 @@ public class EventSubscriber : IEventSubscriber
                     VirtualHost = _settings.VirtualHost
                 };
 
-                _connection = factory.CreateConnection();
+                _connection = factory.CreateConnection(_settings.ClientProvidedName);
                 _channel = _connection.CreateModel();
 
                 // Asegurar que el exchange existe

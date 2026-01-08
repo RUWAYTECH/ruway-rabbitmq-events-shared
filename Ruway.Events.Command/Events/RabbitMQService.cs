@@ -45,7 +45,7 @@ public class RabbitMQService : IRabbitMQService, IDisposable
                 NetworkRecoveryInterval = TimeSpan.FromSeconds(10)
             };
 
-            _connection = factory.CreateConnection("Rokys.Memo.EventPublisher");
+            _connection = factory.CreateConnection(_settings.ClientProvidedName);
             _channel = _connection.CreateModel();
 
             // Declarar el exchange para eventos

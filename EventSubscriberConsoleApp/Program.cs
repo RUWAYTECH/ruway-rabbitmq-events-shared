@@ -30,14 +30,8 @@ class Program
             UserName = "owner",
             Password = "P4ss@78_#%a9",
             EventsExchange = "ruway.events",
-            EmployeeEventsRoutingKey = "employee.events",
-            EntityRoutingKeys = new Dictionary<string, string>
-            {
-                { "employee", "memos.employee.events" },
-                { "enterprise", "memos.enterprise.events" },
-                { "store", "memos.store.events" },
-                { "employee_store", "memos.employee_store.events" }
-            }
+            MicroserviceName = "memos",
+            ClientProvidedName = "EventSubscriberConsoleApp"
         });
 
         // Configurar conexión a base de datos
