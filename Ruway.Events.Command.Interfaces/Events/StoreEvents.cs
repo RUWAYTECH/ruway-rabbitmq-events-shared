@@ -7,8 +7,10 @@ namespace Ruway.Events.Command.Interfaces.Events;
 /// </summary>
 public record StoreCreatedEvent(
     Guid StoreId,
+    string Code,
     string Name,
-    string Address,
+    string? Address,
+    string? Email,
     Guid EnterpriseId
 ) : IDomainEvent, INotification, IRoutableEvent
 {
@@ -28,8 +30,10 @@ public record StoreCreatedEvent(
 /// </summary>
 public record StoreUpdatedEvent(
     Guid StoreId,
+    string Code,
     string Name,
     string Address,
+    string? Email,
     Guid EnterpriseId
 ) : IDomainEvent, INotification, IRoutableEvent
 {

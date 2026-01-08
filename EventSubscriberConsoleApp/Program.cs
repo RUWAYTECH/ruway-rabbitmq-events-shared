@@ -41,7 +41,7 @@ class Program
         });
 
         // Configurar conexión a base de datos
-        var connectionString = "Server=172.16.10.12;Database=DBSecurityQAV2;User=memo;Password=Memo$2025;TrustServerCertificate=True;";
+        var connectionString = "Server=172.16.10.17;Database=DBSecurityPRD;User=rokys;Password=Rokys$2025;TrustServerCertificate=True;";
         services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
         // Registrar servicios
