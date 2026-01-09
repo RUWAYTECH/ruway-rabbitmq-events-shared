@@ -1,4 +1,5 @@
 using MediatR;
+using static Ruway.Events.Command.Interfaces.Constants.EventConstants;
 
 namespace Ruway.Events.Command.Interfaces.Events;
 
@@ -7,8 +8,10 @@ namespace Ruway.Events.Command.Interfaces.Events;
 /// </summary>
 public record StoreCreatedEvent(
     Guid StoreId,
+    string Code,
     string Name,
-    string Address,
+    string? Address,
+    string? Email,
     Guid EnterpriseId
 ) : IDomainEvent, INotification, IRoutableEvent
 {
@@ -20,7 +23,7 @@ public record StoreCreatedEvent(
     /// <summary>
     /// Routing key específica para eventos de tiendas creadas
     /// </summary>
-    public string RoutingKey => "memos.store.created";
+    public string RoutingKey => StoreEvents.StoreCreated;
 }
 
 /// <summary>
@@ -28,8 +31,10 @@ public record StoreCreatedEvent(
 /// </summary>
 public record StoreUpdatedEvent(
     Guid StoreId,
+    string Code,
     string Name,
     string Address,
+    string? Email,
     Guid EnterpriseId
 ) : IDomainEvent, INotification, IRoutableEvent
 {
@@ -41,7 +46,7 @@ public record StoreUpdatedEvent(
     /// <summary>
     /// Routing key específica para eventos de tiendas actualizadas
     /// </summary>
-    public string RoutingKey => "memos.store.updated";
+    public string RoutingKey => StoreEvents.StoreUpdated;
 }
 
 /// <summary>
@@ -59,5 +64,5 @@ public record StoreDeletedEvent(
     /// <summary>
     /// Routing key específica para eventos de tiendas eliminadas
     /// </summary>
-    public string RoutingKey => "memos.store.deleted";
+    public string RoutingKey => StoreEvents.StoreDeleted;
 }

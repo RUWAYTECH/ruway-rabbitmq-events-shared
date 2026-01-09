@@ -41,16 +41,6 @@ public class RabbitMQSettings
     public string MicroserviceName { get; set; } = "unknown";
 
     /// <summary>
-    /// Configuraciones específicas por entidad (opcional)
-    /// </summary>
-    public Dictionary<string, string> EntityRoutingKeys { get; set; } = new();
-
-    /// <summary>
-    /// Routing key para eventos de empleados (compatibilidad hacia atrás)
-    /// </summary>
-    public string EmployeeEventsRoutingKey { get; set; } = "employee.events";
-
-    /// <summary>
     /// Timeout de conexión en millisegundos
     /// </summary>
     public int ConnectionTimeout { get; set; } = 30000;
@@ -64,4 +54,9 @@ public class RabbitMQSettings
     /// Número máximo de reintentos
     /// </summary>
     public int MaxRetries { get; set; } = 3;
+
+    /// <summary>
+    /// Nombre proporcionado por el cliente para la conexión
+    /// </summary>
+    public string ClientProvidedName { get; set; } = "UnknownClient";
 }

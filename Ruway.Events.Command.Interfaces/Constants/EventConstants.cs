@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ruway.Events.Command.Interfaces.Constants
 {
@@ -19,6 +15,13 @@ namespace Ruway.Events.Command.Interfaces.Constants
             public const string EmployeeCreated = "memos.employee.events.created";
             public const string EmployeeUpdated = "memos.employee.events.updated";
             public const string EmployeeDeleted = "memos.employee.events.deleted";
+        }
+
+        public struct StoreEvents
+        {
+            public const string StoreCreated = "memos.store.events.created";
+            public const string StoreUpdated = "memos.store.events.updated";
+            public const string StoreDeleted = "memos.store.events.deleted";
         }
     }
 }

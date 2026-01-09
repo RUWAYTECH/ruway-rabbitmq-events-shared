@@ -85,16 +85,7 @@ public class EventPublisher : IEventPublisher
 
         // 2. Si existe configuración específica para esta entidad, usarla
         var (entity, action) = ExtractEntityAndActionFromEventName(domainEvent.EventName);
-        if (_rabbitMQSettings.EntityRoutingKeys.TryGetValue(entity.ToLower(), out var customRoutingKey))
-        {
-            return $"{customRoutingKey}.{action}";
-        }
-
-        // 3. Para compatibilidad hacia atrás con empleados
-        if (entity.ToLower() == "employee")
-        {
-            return $"{_rabbitMQSettings.EmployeeEventsRoutingKey}.{action}";
-        }
+        
 
         // 4. Usar patrón genérico: microservicio.entidad.acción
         var microservice = _rabbitMQSettings.MicroserviceName?.ToLower() ?? "unknown";

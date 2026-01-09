@@ -52,10 +52,10 @@ public static class ServiceCollectionExtensions
             options.Password = rabbitMQSettings.Password;
             options.VirtualHost = rabbitMQSettings.VirtualHost;
             options.EventsExchange = rabbitMQSettings.EventsExchange;
-            options.EmployeeEventsRoutingKey = rabbitMQSettings.EmployeeEventsRoutingKey;
             options.ConnectionTimeout = rabbitMQSettings.ConnectionTimeout;
             options.EnableRetries = rabbitMQSettings.EnableRetries;
             options.MaxRetries = rabbitMQSettings.MaxRetries;
+            options.ClientProvidedName = rabbitMQSettings.ClientProvidedName;
         });
 
         // Registrar MediatR
