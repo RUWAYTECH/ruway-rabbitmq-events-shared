@@ -1,1 +1,64 @@
+name: CI/CD Pipeline - Ruway RabbitMQ Events Shared
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  SOLUTION_PATH: 'ruway-rabbitmq-events-shared.sln'
+  CLONE_PATH: 'C:\actions-runner\rokys\rokys-memo-service'
+  
+jobs:
+  clone-repository:
+    name: Clone Repository
+    runs-on: [self-hosted, Windows, X64, rokys-runner]
+    
+    steps:      
+    - name: Clone repository to specific location
+      run: |
+        $targetPath = "${{ env.CLONE_PATH }}"
+        
+        Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        Write-Host "📂 Cloning Repository" -ForegroundColor Cyan
+        Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        Write-Host "Repository: ruway-rabbitmq-events-shared"
+        Write-Host "Branch: ${{ github.ref_name }}"
+        Write-Host "Target: $targetPath"
+        Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        
+        # Verificar si existe y actualizar, o clonar nuevo
+        if (Test-Path $targetPath) {
+          Write-Host "📁 Directory exists, pulling latest changes..." -ForegroundColor Yellow
+          cd $targetPath
+          git fetch origin
+          git reset --hard origin/${{ github.ref_name }}
+          git clean -fd
+          Write-Host "✓ Repository updated successfully" -ForegroundColor Green
+        } else {
+          Write-Host "📥 Cloning repository..." -ForegroundColor Yellow
+          $parentPath = Split-Path $targetPath -Parent
+          New-Item -ItemType Directory -Path $parentPath -Force | Out-Null
+          git clone --branch ${{ github.ref_name }} https://github.com/${{ github.repository }}.git $targetPath
+          Write-Host "✓ Repository cloned successfully" -ForegroundColor Green
+        }
+        
+        Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+        Write-Host "✓ Clone completed: $targetPath" -ForegroundColor Green
+        Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+      shell: powershell
+        
+    - name: Verify repository structure
+      run: |
+        cd "${{ env.CLONE_PATH }}"
+        Write-Host "📋 Repository contents:" -ForegroundColor Cyan
+        Get-ChildItem | ForEach-Object {
+          Write-Host "  • $($_.Name)" -ForegroundColor White
+        }
+      shell: powershell
 
