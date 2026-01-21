@@ -12,7 +12,6 @@ permissions:
 env:
   DOTNET_VERSION: '8.0.x'
   SOLUTION_PATH: 'ruway-rabbitmq-events-shared.sln'
-  CLONE_PATH: 'C:\actions-runner\rokys\rokys-memo-service'
   
 jobs:
   clone-repository:
@@ -20,56 +19,31 @@ jobs:
     runs-on: [self-hosted, Windows, X64, rokys-runner]
     
     steps:      
-    - name: Clone repository to specific location
-      run: |
-        $targetPath = "${{ env.CLONE_PATH }}"
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        clean: false
         
+    - name: Display repository information
+      run: |
         Write-Host "============================================"
-        Write-Host "Cloning Repository" -ForegroundColor Cyan
+        Write-Host "Repository Information" -ForegroundColor Cyan
         Write-Host "============================================"
         Write-Host "Repository: ruway-rabbitmq-events-shared"
         Write-Host "Branch: ${{ github.ref_name }}"
-        Write-Host "Target: $targetPath"
-        Write-Host "============================================"
-        
-        # Verificar si existe y si es un repositorio git valido
-        if (Test-Path $targetPath) {
-          $gitPath = Join-Path $targetPath ".git"
-          if (Test-Path $gitPath) {
-            Write-Host "Directory exists, pulling latest changes..." -ForegroundColor Yellow
-            cd $targetPath
-            git fetch origin
-            git reset --hard origin/${{ github.ref_name }}
-            git clean -fd
-            Write-Host "Repository updated successfully" -ForegroundColor Green
-          } else {
-            Write-Host "Directory exists but is not a git repository, removing..." -ForegroundColor Yellow
-            Remove-Item -Path $targetPath -Recurse -Force
-            Write-Host "Cloning repository..." -ForegroundColor Yellow
-            $parentPath = Split-Path $targetPath -Parent
-            New-Item -ItemType Directory -Path $parentPath -Force | Out-Null
-            git clone --branch ${{ github.ref_name }} https://github.com/${{ github.repository }}.git $targetPath
-            Write-Host "Repository cloned successfully" -ForegroundColor Green
-          }
-        } else {
-          Write-Host "Cloning repository..." -ForegroundColor Yellow
-          $parentPath = Split-Path $targetPath -Parent
-          New-Item -ItemType Directory -Path $parentPath -Force | Out-Null
-          git clone --branch ${{ github.ref_name }} https://github.com/${{ github.repository }}.git $targetPath
-          Write-Host "Repository cloned successfully" -ForegroundColor Green
-        }
-        
-        Write-Host "============================================"
-        Write-Host "Clone completed: $targetPath" -ForegroundColor Green
+        Write-Host "Workspace: ${{ github.workspace }}"
+        Write-Host "Commit: ${{ github.sha }}"
         Write-Host "============================================"
       shell: powershell
         
     - name: Verify repository structure
       run: |
-        cd "${{ env.CLONE_PATH }}"
         Write-Host "Repository contents:" -ForegroundColor Cyan
         Get-ChildItem | ForEach-Object {
           Write-Host "  - $($_.Name)" -ForegroundColor White
         }
+        Write-Host "============================================"
+        Write-Host "Clone completed successfully" -ForegroundColor Green
+        Write-Host "============================================"
       shell: powershell
 
