@@ -1,4 +1,5 @@
 using MediatR;
+using static Ruway.Events.Command.Interfaces.Constants.EventConstants;
 
 namespace Ruway.Events.Command.Interfaces.Events;
 
@@ -8,8 +9,19 @@ namespace Ruway.Events.Command.Interfaces.Events;
 public record EnterpriseCreatedEvent(
     Guid EnterpriseId,
     string Name,
-    string BusinessName,
-    string DocumentNumber
+    string Code,
+    string Address,
+    // Theme properties - opcionales para crear/actualizar
+    string? PrimaryColor,
+    string? SecondaryColor,
+    string? AccentColor,
+    string? BackgroundColor,
+    string? TextColor,
+
+    // Logo properties - opcional
+    byte[]? LogoData,
+    string? LogoContentType,
+    string? LogoFileName
 ) : IDomainEvent, INotification, IRoutableEvent
 {
     public Guid EventId { get; } = Guid.NewGuid();
@@ -20,7 +32,7 @@ public record EnterpriseCreatedEvent(
     /// <summary>
     /// Routing key específica para eventos de empresas creadas
     /// </summary>
-    public string RoutingKey => "memos.enterprise.created";
+    public string RoutingKey => EnterpriseEvents.EnterpriseCreated;
 }
 
 /// <summary>
@@ -29,8 +41,19 @@ public record EnterpriseCreatedEvent(
 public record EnterpriseUpdatedEvent(
     Guid EnterpriseId,
     string Name,
-    string BusinessName,
-    string DocumentNumber
+    string Code,
+    string Address,
+    // Theme properties - opcionales para crear/actualizar
+    string? PrimaryColor,
+    string? SecondaryColor,
+    string? AccentColor,
+    string? BackgroundColor,
+    string? TextColor,
+
+    // Logo properties - opcional
+    byte[]? LogoData,
+    string? LogoContentType,
+    string? LogoFileName
 ) : IDomainEvent, INotification, IRoutableEvent
 {
     public Guid EventId { get; } = Guid.NewGuid();
@@ -41,7 +64,7 @@ public record EnterpriseUpdatedEvent(
     /// <summary>
     /// Routing key específica para eventos de empresas actualizadas
     /// </summary>
-    public string RoutingKey => "memos.enterprise.updated";
+    public string RoutingKey => EnterpriseEvents.EnterpriseUpdated;
 }
 
 /// <summary>
@@ -55,9 +78,9 @@ public record EnterpriseDeletedEvent(
     public DateTime OccurredOn { get; } = DateTime.UtcNow;
     public string EventName => nameof(EnterpriseDeletedEvent);
     public int Version => 1;
-    
+
     /// <summary>
     /// Routing key específica para eventos de empresas eliminadas
     /// </summary>
-    public string RoutingKey => "memos.enterprise.deleted";
+    public string RoutingKey => EnterpriseEvents.EnterpriseDeleted;
 }
