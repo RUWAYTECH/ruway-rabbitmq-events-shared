@@ -30,5 +30,12 @@ namespace Ruway.Events.Command.Interfaces.Constants
             public const string EnterpriseUpdated = "memos.enterprise.events.updated";
             public const string EnterpriseDeleted = "memos.enterprise.events.deleted";
         }
+
+        public struct PeopleEvents
+        {
+            public const string PeopleCreated = "async.people.events.created";
+            public const string PeopleUpdated = "async.people.events.updated";
+            public const string PeopleDeleted = "async.people.events.deleted";
+        }
     }
 }
