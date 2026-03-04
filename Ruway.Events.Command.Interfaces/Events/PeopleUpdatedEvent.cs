@@ -7,8 +7,7 @@ namespace Ruway.Events.Command.Interfaces.Events;
 /// Evento que se publica cuando se actualiza una persona
 /// </summary>
 public record PeopleUpdatedEvent(
-    Guid PeopleId,
-    Guid EmployeeId,
+    Guid UserReferenceId,
     string FirstName,
     string LastName,
     string DocumentNumber,
@@ -17,7 +16,6 @@ public record PeopleUpdatedEvent(
     string Phone,
     string RoleCode,
     bool IsExternal,
-    DateTime BirthDate,
     bool IsActive
 ) : IDomainEvent, INotification, IRoutableEvent
 {

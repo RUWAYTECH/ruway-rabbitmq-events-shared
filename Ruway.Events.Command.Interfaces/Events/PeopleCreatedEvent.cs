@@ -7,8 +7,7 @@ namespace Ruway.Events.Command.Interfaces.Events;
 /// Evento que se publica cuando se crea una persona
 /// </summary>
 public record PeopleCreatedEvent(
-    Guid PeopleId,
-    Guid EmployeeId,
+    Guid UserReferenceId,
     string FirstName,
     string LastName,
     string DocumentNumber,
@@ -17,7 +16,6 @@ public record PeopleCreatedEvent(
     string Phone,
     string RoleCode,
     bool IsExternal,
-    DateTime BirthDate,
     bool IsActive
 ) : IDomainEvent, INotification, IRoutableEvent
 {
