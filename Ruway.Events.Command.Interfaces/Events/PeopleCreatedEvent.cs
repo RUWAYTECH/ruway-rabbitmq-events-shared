@@ -8,11 +8,12 @@ namespace Ruway.Events.Command.Interfaces.Events;
 /// </summary>
 public record PeopleCreatedEvent(
     Guid UserReferenceId,
+    Guid? EmployeeId,
     string FirstName,
     string LastName,
     string DocumentNumber,
-    string PersonalEmail,
     string Email,
+    string PersonalEmail,
     string Phone,
     string RoleCode,
     bool IsExternal,

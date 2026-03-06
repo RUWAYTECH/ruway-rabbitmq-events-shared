@@ -8,6 +8,7 @@ namespace Ruway.Events.Command.Interfaces.Events;
 /// </summary>
 public record PeopleUpdatedEvent(
     Guid UserReferenceId,
+    Guid? EmployeeId,
     string FirstName,
     string LastName,
     string DocumentNumber,
