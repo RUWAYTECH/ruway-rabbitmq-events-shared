@@ -15,6 +15,7 @@ public record PeopleCreatedEvent(
     string Email,
     string PersonalEmail,
     string Phone,
+    string ApplicationCode,
     string RoleCode,
     bool IsExternal,
     bool IsActive
