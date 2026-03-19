@@ -39,9 +39,10 @@ public record UserUpdatedEvent(
     string Email,
     string FirstName,
     string LastName,
-    string ApplicationCode,
-    string RoleCodes = null,
-    string RoleNames = null
+    string? ApplicationCode,
+    string? RoleCodes = null,
+    string? RoleNames = null,
+    bool IsActive = true
 ) : IDomainEvent, INotification, IRoutableEvent
 {
     public Guid EventId { get; } = Guid.NewGuid();
