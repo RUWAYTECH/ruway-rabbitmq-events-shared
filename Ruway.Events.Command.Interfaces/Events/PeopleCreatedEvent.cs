@@ -18,7 +18,8 @@ public record PeopleCreatedEvent(
     string ApplicationCode,
     string RoleCode,
     bool IsExternal,
-    bool IsActive
+    bool IsActive,
+    bool IsSizing = false
 ) : IDomainEvent, INotification, IRoutableEvent
 {
     public Guid EventId { get; } = Guid.NewGuid();
